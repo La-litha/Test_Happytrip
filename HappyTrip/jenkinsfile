@@ -12,6 +12,9 @@ pipeline {
                              mvn clean package
                              mvn clean install
                              mvn -B verify
+                             powershell 'java -version'
+				            
+				            powershell 'mvn clean install'
                             '''
                  }
             }
