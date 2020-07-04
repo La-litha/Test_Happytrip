@@ -15,32 +15,22 @@ pipeline {
                             '''
                  }
             }
-                
-                  // Build The Project              
+            // Build The Project              
             stage('Build') {
-                
                          steps {
                              git 'https://github.com/La-litha/Test_Happytrip.git'
                            bat '''
                             cd Happytrip
                             mvn clean install
-                              
-
                            '''
                         }
-            
-        
                   post {
                        success{
                               archiveArtifacts(artifacts: 'HappyTrip/reports/*.html', allowEmptyArchive: true)
                        }
                 }
         }
-    }
-            
-              
-
-                
+    }          
     post{
                 failure{
                     mail to: 'padmajothi020296@gmail.com', from: 'padmajothi020296@gmail.com',
@@ -48,7 +38,6 @@ pipeline {
                     subject: "Project Build: ${env.JOB_NAME} - Failed"
                         
                 }
-            
                 success {
                     emailext attachmentsPattern: 'reports/.html', 
                     body: '''${SCRIPT, template="groovy-html.template"}''',
